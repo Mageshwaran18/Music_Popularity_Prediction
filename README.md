@@ -43,6 +43,41 @@ The dataset used in this project includes:
 
 > Dataset: `SpotifySongPopularityAPIExtract.csv` (Ensure it is available in the working directory.)
 
+## 🔍 Internal Working of XGBoost Regression
+
+XGBoost (eXtreme Gradient Boosting) is an advanced implementation of gradient boosting. Here's how it works:
+
+1. **Initial Prediction**: Start with the mean of the target values.
+2. **Calculate Residuals**: Target - Prediction
+3. **Set Hyperparameters**:
+   - **Gamma (γ)**: Regularization for pruning (controls complexity)
+   - **Lambda (λ)**: L2 regularization for leaf weights (reduces overfitting)
+   - **Tree depth**: Controls model complexity
+   - **Learning rate**: Controls contribution of each tree
+
+4. **Build Regression Trees using residuals**:
+   - **Similarity Score** for each split:
+     ```
+     Score = (∑residuals)²/(n + λ)
+     ```
+   - **Gain Calculation**:
+     ```
+     Gain = Left Score + Right Score - Parent Score
+     ```
+     - Tells how good a split is
+     - Best Splits are selected based on maximum Gain
+   - **Pruning** happens when:
+     ```
+     Gain < γ ⇒ Prune the split
+     ```
+
+5. **Update prediction**:
+   ```
+   New Prediction = Old Prediction + Learning Rate × Tree Output
+   ```
+
+6. **Repeat** this process for multiple trees until stopping criteria (like max trees or low residuals)
+
 ## 📦 Installation
 
 1. Clone the repository:
