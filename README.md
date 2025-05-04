@@ -59,11 +59,13 @@ XGBoost (eXtreme Gradient Boosting) is an advanced implementation of gradient bo
    - **Similarity Score** for each split:
      ```
      Score = (∑residuals)²/(n + λ)
+     Where n is the number of residuals 
      ```
    - **Gain Calculation**:
      ```
      Gain = Left Score + Right Score - Parent Score
      ```
+     - Parent Score refers to the root Score 
      - Tells how good a split is
      - Best Splits are selected based on maximum Gain
    - **Pruning** happens when:
@@ -72,6 +74,7 @@ XGBoost (eXtreme Gradient Boosting) is an advanced implementation of gradient bo
      ```
 
 5. **Update prediction**:
+   Based on the constructe tree find the outputs for the data points.
    ```
    New Prediction = Old Prediction + Learning Rate × Tree Output
    ```
